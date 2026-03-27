@@ -50,7 +50,7 @@ function FinanceNews() {
 
     try {
       const query = buildQuery(filters)
-      const response = await fetch(`http://localhost:8787/api/finance-news?${query.toString()}`)
+      const response = await fetch(`/api/finance-news?${query.toString()}`)
       const data = await response.json()
 
       if (!response.ok) {

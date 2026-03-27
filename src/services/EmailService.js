@@ -7,7 +7,7 @@ const toBase64 = (blob) =>
   })
 
 export const sendReportByEmail = async ({ recipientEmail, pdfBlob, summary, periodLabel }) => {
-  const endpoint = import.meta.env.VITE_REPORT_API_URL || 'http://localhost:8787/api/send-report'
+  const endpoint = '/api/send-report'
 
   const pdfDataUrl = await toBase64(pdfBlob)
   const pdfBase64 = String(pdfDataUrl).split(',')[1] ?? ''
