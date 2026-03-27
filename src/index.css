@@ -1,12 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap');
+
 :root {
-  --bg: #f3f8f7;
-  --text: #1a2d2a;
-  --muted: #56716a;
-  --card-bg: #f7fbfa;
-  --card-border: #c7d8d4;
-  --elevation-sm: 0 12px 26px -18px rgba(12, 38, 34, 0.45);
-  --font-sans: 'DM Sans', 'Segoe UI', 'Trebuchet MS', sans-serif;
-  --font-head: 'Outfit', 'Segoe UI', sans-serif;
+  --bg: #090d16;
+  --bg-panel: #101826;
+  --bg-elevated: #172235;
+  --text: #edf3ff;
+  --muted: #9eb1cf;
+  --card-bg: rgba(16, 24, 38, 0.84);
+  --card-border: #293b5e;
+  --accent: #ff7a1a;
+  --accent-soft: #ffbe8b;
+  --success: #3ed598;
+  --danger: #ff5f6d;
+  --focus: #8eb8ff;
+  --elevation-sm: 0 18px 36px -26px rgba(0, 0, 0, 0.8);
+  --font-sans: 'IBM Plex Sans', 'Segoe UI', sans-serif;
+  --font-head: 'Syne', 'Segoe UI', sans-serif;
 }
 
 * {
@@ -19,9 +28,22 @@ body {
   color: var(--text);
   font-family: var(--font-sans);
   background:
-    radial-gradient(circle at 6% 5%, #e5f7f4 0%, rgba(229, 247, 244, 0) 34%),
-    radial-gradient(circle at 92% 18%, #fce8d9 0%, rgba(252, 232, 217, 0) 38%),
+    radial-gradient(circle at 14% 0%, rgba(255, 122, 26, 0.26), transparent 34%),
+    radial-gradient(circle at 92% 22%, rgba(100, 162, 255, 0.18), transparent 38%),
+    linear-gradient(180deg, #0a0f1a 0%, #090d16 100%),
     var(--bg);
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 0.36;
 }
 
 h1,
@@ -43,4 +65,8 @@ p,
 small {
   margin: 0;
   color: var(--muted);
+}
+
+a {
+  color: inherit;
 }
