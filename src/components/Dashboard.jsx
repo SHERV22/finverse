@@ -1,24 +1,24 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
+  selectTransactions,
   selectMonthlyBudget,
   selectRemainingBalance,
   selectTotalExpenses,
   selectTotalIncome,
 } from '../app/selectors'
 import { setBudget } from '../features/budget/budgetSlice'
-import TransactionForm from './TransactionForm'
 import TransactionList from './TransactionList'
 import Charts from './Charts'
 
 function Dashboard() {
   const dispatch = useDispatch()
+  const transactions = useSelector(selectTransactions)
   const totalIncome = useSelector(selectTotalIncome)
   const totalExpenses = useSelector(selectTotalExpenses)
   const remainingBalance = useSelector(selectRemainingBalance)
   const monthlyBudget = useSelector(selectMonthlyBudget)
 
-  const [editingTransaction, setEditingTransaction] = useState(null)
   const [budgetInput, setBudgetInput] = useState(String(monthlyBudget))
 
   const budgetUsagePercent = monthlyBudget > 0 ? Math.min((totalExpenses / monthlyBudget) * 100, 100) : 0
@@ -83,15 +83,15 @@ function Dashboard() {
         </div>
       </section>
 
-      <section className="layout-grid">
-        <TransactionForm
-          editingTransaction={editingTransaction}
-          onCancelEdit={() => setEditingTransaction(null)}
-        />
-        <TransactionList onEdit={setEditingTransaction} />
-      </section>
-
       <Charts />
+
+      <section className="card" style={{ marginTop: '1rem' }}>
+        <div className="section-header">
+          <h2>Recent Activity</h2>
+          <p>{transactions.length} total transactions</p>
+        </div>
+        <TransactionList readOnly limit={5} />
+      </section>
     </main>
   )
 }

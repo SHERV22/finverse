@@ -1,7 +1,120 @@
-.dashboard {
-  width: min(1200px, 100% - 2.5rem);
+.app-shell {
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+}
+
+.sidebar {
+  padding: 1.5rem 1rem;
+  border-right: 1px solid var(--card-border);
+  background: linear-gradient(180deg, #f5fbf9 0%, #eff7f4 100%);
+  position: sticky;
+  top: 0;
+  height: 100svh;
+}
+
+.sidebar-header {
+  padding: 0.8rem;
+}
+
+.sidebar-header p {
+  margin-top: 0.3rem;
+}
+
+.sidebar-nav {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.nav-link {
+  display: block;
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 600;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  padding: 0.72rem 0.85rem;
+}
+
+.nav-link:hover {
+  background: #eaf5f1;
+}
+
+.nav-link.active {
+  border-color: #9ac3b8;
+  background: #d9efe8;
+}
+
+.sidebar-backdrop {
+  display: none;
+}
+
+.app-content {
+  min-width: 0;
+}
+
+.top-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--card-border);
+  background: rgba(245, 251, 249, 0.8);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.menu-button {
+  display: none;
+  background: #d9efe8;
+  color: #1b4332;
+  border: 1px solid #9ac3b8;
+  font-weight: 600;
+}
+
+.eyebrow {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.navbar-meta {
+  font-weight: 600;
+}
+
+.page-container {
+  width: min(1260px, 100% - 2.5rem);
   margin: 0 auto;
-  padding: 2rem 0 3rem;
+  padding-bottom: 2.5rem;
+}
+
+.route-fade {
+  animation: routeFade 220ms ease;
+}
+
+@keyframes routeFade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dashboard {
+  padding: 1.6rem 0;
 }
 
 .page-header {
@@ -10,6 +123,7 @@
 
 .page-header p {
   max-width: 760px;
+  margin-top: 0.35rem;
 }
 
 .summary-grid {
@@ -89,7 +203,9 @@
   gap: 0.75rem;
 }
 
-.transaction-form label {
+.transaction-form label,
+.filters-grid label,
+.email-controls {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
@@ -126,6 +242,11 @@ button {
   background: #2a9d8f;
   color: #ffffff;
   cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
 }
 
 button:hover {
@@ -201,15 +322,117 @@ button.danger {
   margin-top: 0.7rem;
 }
 
+.filters-card {
+  margin-bottom: 1rem;
+}
+
+.filters-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.8rem;
+}
+
+.report-table-card {
+  margin-bottom: 1rem;
+}
+
+.report-table-wrap {
+  overflow-x: auto;
+  margin-top: 0.7rem;
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 640px;
+}
+
+.report-table th,
+.report-table td {
+  text-align: left;
+  border-bottom: 1px solid #d9e5e2;
+  padding: 0.58rem;
+  vertical-align: top;
+}
+
+.report-table th {
+  color: #31544d;
+  font-size: 0.86rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.report-actions p {
+  margin-top: 0.3rem;
+}
+
+.report-buttons {
+  margin-top: 0.85rem;
+}
+
+.email-controls {
+  margin-top: 1rem;
+  max-width: 420px;
+}
+
+.email-controls button {
+  margin-top: 0.4rem;
+}
+
+.status-message {
+  margin-top: 0.8rem;
+  font-weight: 600;
+}
+
 .empty-state {
   color: #56716a;
+}
+
+@media (max-width: 1080px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: fixed;
+    left: -100%;
+    width: min(300px, 86vw);
+    z-index: 50;
+    transition: left 220ms ease;
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+
+  .sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    border: 0;
+    background: rgba(13, 24, 21, 0.3);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 45;
+    display: block;
+  }
+
+  .sidebar-backdrop.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .menu-button {
+    display: inline-flex;
+  }
 }
 
 @media (max-width: 1024px) {
   .summary-grid,
   .layout-grid,
   .chart-grid,
-  .transaction-form {
+  .transaction-form,
+  .filters-grid {
     grid-template-columns: 1fr;
   }
 
@@ -229,5 +452,15 @@ button.danger {
 
   .transaction-item {
     flex-direction: column;
+  }
+}
+
+@media (max-width: 640px) {
+  .top-navbar {
+    padding: 0.9rem 1rem;
+  }
+
+  .page-container {
+    width: min(1260px, 100% - 1.2rem);
   }
 }

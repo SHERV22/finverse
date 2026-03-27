@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { deleteTransaction } from '../features/transactions/transactionSlice'
 import { selectTransactions } from '../app/selectors'
 
-function TransactionList({ onEdit }) {
+function TransactionList({ onEdit, readOnly = false, limit = null }) {
   const dispatch = useDispatch()
   const transactions = useSelector(selectTransactions)
   const [typeFilter, setTypeFilter] = useState('all')
@@ -16,6 +16,14 @@ function TransactionList({ onEdit }) {
     return transactions.filter((transaction) => transaction.type === typeFilter)
   }, [transactions, typeFilter])
 
+  const visibleTransactions = useMemo(() => {
+    if (!limit) {
+      return filteredTransactions
+    }
+
+    return filteredTransactions.slice(0, limit)
+  }, [filteredTransactions, limit])
+
   return (
     <section className="card">
       <div className="section-header">
@@ -27,11 +35,11 @@ function TransactionList({ onEdit }) {
         </select>
       </div>
 
-      {filteredTransactions.length === 0 ? (
+      {visibleTransactions.length === 0 ? (
         <p className="empty-state">No transactions yet. Add one from the form.</p>
       ) : (
         <ul className="transaction-list">
-          {filteredTransactions.map((transaction) => (
+          {visibleTransactions.map((transaction) => (
             <li key={transaction.id} className="transaction-item">
               <div>
                 <strong>{transaction.category}</strong>
@@ -43,18 +51,20 @@ function TransactionList({ onEdit }) {
                   {transaction.type}
                 </span>
                 <strong>${Number(transaction.amount).toFixed(2)}</strong>
-                <div className="inline-actions">
-                  <button type="button" className="ghost" onClick={() => onEdit(transaction)}>
-                    Edit
-                  </button>
-                  <button
-                    type="button"
-                    className="danger"
-                    onClick={() => dispatch(deleteTransaction(transaction.id))}
-                  >
-                    Delete
-                  </button>
-                </div>
+                {!readOnly && (
+                  <div className="inline-actions">
+                    <button type="button" className="ghost" onClick={() => onEdit?.(transaction)}>
+                      Edit
+                    </button>
+                    <button
+                      type="button"
+                      className="danger"
+                      onClick={() => dispatch(deleteTransaction(transaction.id))}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                )}
               </div>
             </li>
           ))}
