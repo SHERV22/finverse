@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react'
 import Dashboard from './components/Dashboard'
 import AddTransactionPage from './components/AddTransactionPage'
 import Reports from './components/Reports'
+import FinanceNews from './components/FinanceNews'
 import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
 import './App.css'
@@ -11,6 +12,7 @@ const routeTitles = {
   '/dashboard': 'Dashboard',
   '/add-transaction': 'Add Transaction',
   '/reports': 'Reports',
+  '/finance-news': 'Finance News',
 }
 
 function AppShell() {
@@ -31,6 +33,7 @@ function AppShell() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/add-transaction" element={<AddTransactionPage />} />
             <Route path="/reports" element={<Reports />} />
+            <Route path="/finance-news" element={<FinanceNews />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </main>

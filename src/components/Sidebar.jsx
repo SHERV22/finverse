@@ -4,6 +4,7 @@ const navItems = [
   { to: '/dashboard', label: 'Dashboard' },
   { to: '/add-transaction', label: 'Add Transaction' },
   { to: '/reports', label: 'Reports' },
+  { to: '/finance-news', label: 'Finance News' },
 ]
 
 function Sidebar({ isOpen, onClose }) {

@@ -507,6 +507,69 @@ button.danger {
   color: var(--muted);
 }
 
+.news-filters-card {
+  margin-bottom: 0.9rem;
+}
+
+.news-filters-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 320px);
+  gap: 0.75rem;
+  margin-top: 0.8rem;
+}
+
+.news-list-card {
+  margin-bottom: 0.9rem;
+}
+
+.news-feed-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.85rem 0 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.news-feed-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  border: 1px solid #2d4269;
+  padding: 0.85rem;
+  background: rgba(23, 34, 53, 0.64);
+}
+
+.news-feed-item h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  letter-spacing: 0.01em;
+}
+
+.news-feed-item p {
+  margin: 0.45rem 0;
+}
+
+.news-feed-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.45rem;
+}
+
+.news-feed-meta a {
+  color: var(--accent-soft);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.news-feed-meta a:hover {
+  text-decoration: underline;
+}
+
+.news-status-text {
+  font-size: 1rem;
+}
+
 @media (max-width: 1080px) {
   .app-shell {
     grid-template-columns: 1fr;
@@ -550,7 +613,8 @@ button.danger {
   .layout-grid,
   .chart-grid,
   .transaction-form,
-  .filters-grid {
+  .filters-grid,
+  .news-filters-grid {
     grid-template-columns: 1fr;
   }
 
@@ -570,6 +634,14 @@ button.danger {
 
   .transaction-item {
     flex-direction: column;
+  }
+
+  .news-feed-item {
+    grid-template-columns: 1fr;
+  }
+
+  .news-feed-meta {
+    align-items: flex-start;
   }
 }
 
