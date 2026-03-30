@@ -11,11 +11,6 @@ function Sidebar({ isOpen, onClose }) {
   return (
     <>
       <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
-        <div className="sidebar-header">
-          <h2>Finverse</h2>
-          <p>Personal Finance</p>
-        </div>
-
         <nav className="sidebar-nav" aria-label="Primary navigation">
           {navItems.map((item) => (
             <NavLink

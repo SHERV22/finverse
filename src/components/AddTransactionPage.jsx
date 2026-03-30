@@ -8,16 +8,28 @@ function AddTransactionPage() {
   return (
     <main className="dashboard">
       <header className="page-header">
-        <h1>Add And Manage Transactions</h1>
-        <p>Capture income and expenses quickly, then edit or remove entries from the transaction list.</p>
+        <h1>Transaction Workspace</h1>
+        <p>Capture entries quickly, then curate and revise your ledger in an action-focused management lane.</p>
       </header>
 
-      <section className="layout-grid">
+      <section className="workspace-grid">
+        <article className="card workspace-note">
+          <h2>Entry Protocol</h2>
+          <p>
+            Record with precision: amount, type, category, and date. Add notes only when they add audit value.
+          </p>
+          <p>
+            Use edit mode to correct historical entries without rebuilding your whole ledger timeline.
+          </p>
+        </article>
+
+        <div className="layout-grid">
         <TransactionForm
           editingTransaction={editingTransaction}
           onCancelEdit={() => setEditingTransaction(null)}
         />
         <TransactionList onEdit={setEditingTransaction} />
+        </div>
       </section>
     </main>
   )
