@@ -24,12 +24,16 @@ function Dashboard() {
   const budgetUsagePercent = monthlyBudget > 0 ? Math.min((totalExpenses / monthlyBudget) * 100, 100) : 0
 
   const budgetRemaining = monthlyBudget - totalExpenses
+  const averageTransactionValue = transactions.length > 0 ? (totalExpenses + totalIncome) / transactions.length : 0
 
   return (
     <main className="dashboard">
       <header className="page-header">
-        <h1>Personal Finance Dashboard</h1>
-        <p>Track transactions, monitor budgets, and visualize spending patterns in real time.</p>
+        <h1>Financial Command Overview</h1>
+        <p>
+          Monitor your cashflow, tune monthly limits, and spot category patterns through an editorial analytics
+          board designed for fast decision-making.
+        </p>
       </header>
 
       <section className="summary-grid">
@@ -49,43 +53,63 @@ function Dashboard() {
         </article>
       </section>
 
-      <section className="card budget-card">
-        <div className="section-header">
-          <h2>Monthly Budget</h2>
-          <form
-            className="inline-actions"
-            onSubmit={(event) => {
-              event.preventDefault()
-              dispatch(setBudget(budgetInput))
-            }}
-          >
-            <input
-              type="number"
-              min="0"
-              step="0.01"
-              value={budgetInput}
-              onChange={(event) => setBudgetInput(event.target.value)}
-              placeholder="Set monthly budget"
-            />
-            <button type="submit">Save Budget</button>
-          </form>
-        </div>
-        <div className="budget-status">
-          <p>
-            Limit: <strong>${monthlyBudget.toFixed(2)}</strong>
-          </p>
-          <p>
-            Remaining: <strong>${budgetRemaining.toFixed(2)}</strong>
-          </p>
-        </div>
-        <div className="progress-track" aria-label="Budget usage">
-          <div className="progress-fill" style={{ width: `${budgetUsagePercent}%` }} />
-        </div>
+      <section className="dashboard-lane">
+        <article className="card budget-card">
+          <div className="section-header">
+            <h2>Monthly Budget Control</h2>
+            <form
+              className="inline-actions"
+              onSubmit={(event) => {
+                event.preventDefault()
+                dispatch(setBudget(budgetInput))
+              }}
+            >
+              <input
+                type="number"
+                min="0"
+                step="0.01"
+                value={budgetInput}
+                onChange={(event) => setBudgetInput(event.target.value)}
+                placeholder="Set monthly budget"
+              />
+              <button type="submit">Save Budget</button>
+            </form>
+          </div>
+          <div className="budget-status">
+            <p>
+              Limit: <strong>${monthlyBudget.toFixed(2)}</strong>
+            </p>
+            <p>
+              Remaining: <strong>${budgetRemaining.toFixed(2)}</strong>
+            </p>
+            <p>
+              Usage: <strong>{budgetUsagePercent.toFixed(1)}%</strong>
+            </p>
+          </div>
+          <div className="progress-track" aria-label="Budget usage">
+            <div className="progress-fill" style={{ width: `${budgetUsagePercent}%` }} />
+          </div>
+        </article>
+
+        <article className="card signal-card">
+          <h2>Signal Snapshot</h2>
+          <p className="signal-copy">A quick pulse of activity and spending intensity from your latest ledger data.</p>
+          <div className="signal-grid">
+            <div>
+              <small>Total Transactions</small>
+              <strong>{transactions.length}</strong>
+            </div>
+            <div>
+              <small>Avg Transaction Value</small>
+              <strong>${averageTransactionValue.toFixed(2)}</strong>
+            </div>
+          </div>
+        </article>
       </section>
 
       <Charts />
 
-      <section className="card" style={{ marginTop: '1rem' }}>
+      <section className="card recent-activity-card">
         <div className="section-header">
           <h2>Recent Activity</h2>
           <p>{transactions.length} total transactions</p>

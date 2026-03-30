@@ -82,8 +82,11 @@ function TransactionForm({ editingTransaction, onCancelEdit }) {
   }
 
   return (
-    <section className="card">
+    <section className="card form-card">
+      <p className="card-kicker">Entry Console</p>
       <h2>{isEditing ? 'Edit Transaction' : 'Add Transaction'}</h2>
+      <p className="card-caption">All values sync instantly to totals, charts, and report exports.</p>
+
       <form className="transaction-form" onSubmit={handleSubmit}>
         <label>
           Amount

@@ -44,6 +44,9 @@ function FinanceNews() {
     return average.toFixed(3)
   }, [articles])
 
+  const leadArticle = articles[0] ?? null
+  const streamArticles = leadArticle ? articles.slice(1) : articles
+
   const fetchNews = async () => {
     setIsLoading(true)
     setStatusMessage('Fetching market intelligence...')
@@ -83,14 +86,14 @@ function FinanceNews() {
       <header className="page-header">
         <h1>Finance News</h1>
         <p>
-          Live Alpha Intelligence stream powered by Alpha Vantage news and sentiment signals for stocks,
-          crypto, forex, and macro themes.
+          Live Alpha Intelligence stream with sentiment signals across equities, crypto, forex, and macro
+          developments.
         </p>
       </header>
 
       <section className="card news-filters-card">
         <div className="section-header">
-          <h2>News Filters</h2>
+          <h2>Market Feed Controls</h2>
           <button type="button" onClick={fetchNews} disabled={isLoading}>
             {isLoading ? 'Loading...' : 'Refresh Feed'}
           </button>
@@ -130,37 +133,58 @@ function FinanceNews() {
         </article>
       </section>
 
-      <section className="card news-list-card">
-        <div className="section-header">
-          <h2>News And Sentiment Feed</h2>
-          <p>{filters.sort} order</p>
-        </div>
+      <section className="news-layout-grid">
+        <article className="card news-lead-card">
+          <h2>Lead Signal</h2>
+          {!leadArticle ? (
+            <p className="empty-state">No market news matched this filter set.</p>
+          ) : (
+            <>
+              <h3>{leadArticle.title}</h3>
+              <p>{leadArticle.summary || 'No summary provided.'}</p>
+              <div className="news-lead-meta">
+                <span className="pill income">{leadArticle.overall_sentiment_label || 'Neutral'}</span>
+                <strong>{Number(leadArticle.overall_sentiment_score || 0).toFixed(3)}</strong>
+                <a href={leadArticle.url} target="_blank" rel="noreferrer">
+                  Open Story
+                </a>
+              </div>
+            </>
+          )}
+        </article>
 
-        {articles.length === 0 ? (
-          <p className="empty-state">No market news matched this filter set.</p>
-        ) : (
-          <ul className="news-feed-list">
-            {articles.map((article, index) => (
-              <li key={`${article.url}-${index}`} className="news-feed-item">
-                <div>
-                  <h3>{article.title}</h3>
-                  <p>{article.summary || 'No summary provided.'}</p>
-                  <small>
-                    {article.source} • {article.time_published || 'Unknown time'}
-                  </small>
-                </div>
+        <section className="card news-list-card">
+          <div className="section-header">
+            <h2>Story Stream</h2>
+            <p>{filters.sort} order</p>
+          </div>
 
-                <div className="news-feed-meta">
-                  <span className="pill income">Sentiment {article.overall_sentiment_label || 'Neutral'}</span>
-                  <strong>{Number(article.overall_sentiment_score || 0).toFixed(3)}</strong>
-                  <a href={article.url} target="_blank" rel="noreferrer">
-                    Open Story
-                  </a>
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
+          {streamArticles.length === 0 ? (
+            <p className="empty-state">No additional stories available.</p>
+          ) : (
+            <ul className="news-feed-list">
+              {streamArticles.map((article, index) => (
+                <li key={`${article.url}-${index}`} className="news-feed-item">
+                  <div>
+                    <h3>{article.title}</h3>
+                    <p>{article.summary || 'No summary provided.'}</p>
+                    <small>
+                      {article.source} • {article.time_published || 'Unknown time'}
+                    </small>
+                  </div>
+
+                  <div className="news-feed-meta">
+                    <span className="pill income">{article.overall_sentiment_label || 'Neutral'}</span>
+                    <strong>{Number(article.overall_sentiment_score || 0).toFixed(3)}</strong>
+                    <a href={article.url} target="_blank" rel="noreferrer">
+                      Open Story
+                    </a>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
       </section>
     </main>
   )
