@@ -8,18 +8,25 @@
   flex: 1;
   min-width: 0;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: flex-start;
 }
 
 .sidebar {
+  width: 220px;
+  min-width: 200px;
+  height: 100svh;
   position: sticky;
-  top: 72px;
+  top: 0;
   z-index: 45;
-  padding: 0.62rem 1.2rem;
-  border-bottom: 1px solid var(--line);
+  padding: 1rem 1rem;
+  border-right: 1px solid var(--line);
   background:
-    linear-gradient(90deg, rgba(88, 118, 255, 0.12), transparent 40%),
+    linear-gradient(90deg, rgba(88, 118, 255, 0.06), transparent 40%),
     linear-gradient(180deg, rgba(8, 14, 24, 0.94) 0%, rgba(8, 12, 21, 0.9) 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .sidebar::before {
@@ -31,22 +38,23 @@
 }
 
 .sidebar-nav {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.52rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  align-items: stretch;
 }
 
 .nav-link {
   display: block;
-  text-align: center;
+  text-align: left;
   text-decoration: none;
   color: var(--text);
   font-family: var(--font-display);
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.09em;
-  font-size: 0.82rem;
-  padding: 0.64rem 0.72rem;
+  letter-spacing: 0.06em;
+  font-size: 0.85rem;
+  padding: 0.72rem 0.9rem;
   border: 1px solid var(--line);
   background: linear-gradient(180deg, rgba(17, 28, 46, 0.76) 0%, rgba(12, 20, 34, 0.88) 100%);
   transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
@@ -61,6 +69,13 @@
   border-color: var(--accent);
   background: linear-gradient(90deg, rgba(39, 64, 112, 0.96), rgba(27, 45, 79, 0.96));
   color: var(--accent-soft);
+}
+
+.app-panel {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .command-bar {
