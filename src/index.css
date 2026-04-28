@@ -1,21 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Public+Sans:wght@400;500;600;700&display=swap');
 
 :root {
-  --bg: #090d16;
-  --bg-panel: #101826;
-  --bg-elevated: #172235;
-  --text: #edf3ff;
-  --muted: #9eb1cf;
-  --card-bg: rgba(16, 24, 38, 0.84);
-  --card-border: #293b5e;
-  --accent: #ff7a1a;
-  --accent-soft: #ffbe8b;
-  --success: #3ed598;
-  --danger: #ff5f6d;
-  --focus: #8eb8ff;
-  --elevation-sm: 0 18px 36px -26px rgba(0, 0, 0, 0.8);
-  --font-sans: 'IBM Plex Sans', 'Segoe UI', sans-serif;
-  --font-head: 'Syne', 'Segoe UI', sans-serif;
+  --bg-canvas: #050910;
+  --bg-mid: #0b1220;
+  --bg-panel: #0f1a2d;
+  --bg-panel-strong: #16253f;
+  --text: #eef4ff;
+  --muted: #95a7c6;
+  --line: #253855;
+  --line-strong: #3a5783;
+  --accent: #45d4ff;
+  --accent-2: #7f8dff;
+  --accent-soft: #c6edff;
+  --success: #79f0cc;
+  --danger: #ff7393;
+  --focus: #9ec3ff;
+  --shadow-sm: 0 18px 36px -24px rgba(0, 0, 0, 0.75);
+  --shadow-lg: 0 34px 80px -36px rgba(0, 0, 0, 0.86);
+  --font-body: 'Public Sans', 'Segoe UI', sans-serif;
+  --font-display: 'Rajdhani', 'Segoe UI', sans-serif;
 }
 
 * {
@@ -26,12 +29,12 @@ body {
   margin: 0;
   min-height: 100svh;
   color: var(--text);
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   background:
-    radial-gradient(circle at 14% 0%, rgba(255, 122, 26, 0.26), transparent 34%),
-    radial-gradient(circle at 92% 22%, rgba(100, 162, 255, 0.18), transparent 38%),
-    linear-gradient(180deg, #0a0f1a 0%, #090d16 100%),
-    var(--bg);
+    radial-gradient(circle at 8% -8%, rgba(127, 141, 255, 0.26), transparent 34%),
+    radial-gradient(circle at 96% 12%, rgba(69, 212, 255, 0.22), transparent 36%),
+    linear-gradient(180deg, #0a111d 0%, #060b13 58%, #050910 100%),
+    var(--bg-canvas);
 }
 
 body::before {
@@ -40,17 +43,27 @@ body::before {
   inset: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 28px 28px;
-  opacity: 0.36;
+    linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 34px 34px;
+  opacity: 0.34;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.09) 0.55px, transparent 0.55px);
+  background-size: 2px 2px;
+  opacity: 0.06;
 }
 
 h1,
 h2 {
   margin: 0;
-  font-family: var(--font-head);
-  letter-spacing: 0.01em;
+  font-family: var(--font-display);
+  letter-spacing: 0.015em;
 }
 
 h1 {

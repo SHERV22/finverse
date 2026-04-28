@@ -23,20 +23,25 @@ function AppShell() {
 
   return (
     <div className="app-shell">
-      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+      <div className="app-main">
+        <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
-      <div className="app-content">
-        <Navbar title={pageTitle} onOpenMenu={() => setIsSidebarOpen(true)} />
-        <main key={location.pathname} className="page-container route-fade">
-          <Routes>
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/add-transaction" element={<AddTransactionPage />} />
-            <Route path="/reports" element={<Reports />} />
-            <Route path="/finance-news" element={<FinanceNews />} />
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
-          </Routes>
-        </main>
+        <div className="app-panel">
+          <Navbar title={pageTitle} onOpenMenu={() => setIsSidebarOpen(true)} />
+
+          <div className="app-content">
+            <main key={location.pathname} className="page-container route-fade">
+              <Routes>
+                <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/add-transaction" element={<AddTransactionPage />} />
+                <Route path="/reports" element={<Reports />} />
+                <Route path="/finance-news" element={<FinanceNews />} />
+                <Route path="*" element={<Navigate to="/dashboard" replace />} />
+              </Routes>
+            </main>
+          </div>
+        </div>
       </div>
     </div>
   )

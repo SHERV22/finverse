@@ -1,7 +1,14 @@
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectTransactions } from '../app/selectors'
 import PDFGenerator from './PDFGenerator'
+
+const sortOptions = [
+  { value: 'latest', label: 'Latest' },
+  { value: 'oldest', label: 'Oldest' },
+  { value: 'amount-desc', label: 'Amount High-Low' },
+  { value: 'amount-asc', label: 'Amount Low-High' },
+]
 
 const toDateKey = (dateValue) => {
   const parsed = new Date(dateValue)
@@ -25,6 +32,9 @@ function Reports() {
   const transactions = useSelector(selectTransactions)
   const [startDate, setStartDate] = useState(getDefaultStartDate)
   const [endDate, setEndDate] = useState(getToday)
+  const [sortBy, setSortBy] = useState('latest')
+  const [currentPage, setCurrentPage] = useState(1)
+  const pageSize = 8
   const reportRef = useRef(null)
 
   const filteredTransactions = useMemo(() => {
@@ -66,6 +76,31 @@ function Reports() {
     }
   }, [filteredTransactions])
 
+  const sortedTransactions = useMemo(() => {
+    return [...filteredTransactions].sort((a, b) => {
+      if (sortBy === 'oldest') {
+        return new Date(a.date).getTime() - new Date(b.date).getTime()
+      }
+
+      if (sortBy === 'amount-desc') {
+        return Number(b.amount) - Number(a.amount)
+      }
+
+      if (sortBy === 'amount-asc') {
+        return Number(a.amount) - Number(b.amount)
+      }
+
+      return new Date(b.date).getTime() - new Date(a.date).getTime()
+    })
+  }, [filteredTransactions, sortBy])
+
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [startDate, endDate, sortBy])
+
+  const totalPages = Math.max(1, Math.ceil(sortedTransactions.length / pageSize))
+  const paginatedTransactions = sortedTransactions.slice((currentPage - 1) * pageSize, currentPage * pageSize)
+
   const periodLabel = startDate && endDate ? `${startDate} to ${endDate}` : 'All dates'
 
   return (
@@ -77,11 +112,11 @@ function Reports() {
 
       <section className="card filters-card">
         <div className="section-header">
-          <h2>Date Filters</h2>
+          <h2>Report Controls</h2>
           <p>{filteredTransactions.length} transactions in range</p>
         </div>
 
-        <div className="filters-grid">
+        <div className="filters-grid report-controls-grid">
           <label>
             Start Date
             <input type="date" value={startDate} onChange={(event) => setStartDate(event.target.value)} />
@@ -90,6 +125,17 @@ function Reports() {
           <label>
             End Date
             <input type="date" value={endDate} onChange={(event) => setEndDate(event.target.value)} />
+          </label>
+
+          <label>
+            Sort By
+            <select value={sortBy} onChange={(event) => setSortBy(event.target.value)}>
+              {sortOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
           </label>
         </div>
       </section>
@@ -132,7 +178,7 @@ function Reports() {
                 </tr>
               </thead>
               <tbody>
-                {filteredTransactions.map((transaction) => (
+                {paginatedTransactions.map((transaction) => (
                   <tr key={transaction.id}>
                     <td>{new Date(transaction.date).toLocaleDateString()}</td>
                     <td>{transaction.category}</td>
@@ -147,6 +193,30 @@ function Reports() {
                 ))}
               </tbody>
             </table>
+          </div>
+        )}
+
+        {sortedTransactions.length > pageSize && (
+          <div className="list-pagination">
+            <button
+              type="button"
+              className="ghost"
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
+            >
+              Previous
+            </button>
+            <p>
+              Page {currentPage} of {totalPages}
+            </p>
+            <button
+              type="button"
+              className="ghost"
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
+            >
+              Next
+            </button>
           </div>
         )}
       </section>
